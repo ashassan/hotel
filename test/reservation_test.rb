@@ -1,11 +1,5 @@
 require_relative 'test_helper'
 
-describe "Wave 1 Reservation Tests" do 
-    describe "Initialize" do 
-        
-        
-    end 
-    
     describe "total_cost method" do 
         before do 
            
@@ -28,5 +22,3 @@ describe "Wave 1 Reservation Tests" do
     
     end 
     
-    
-end 
