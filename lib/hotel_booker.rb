@@ -1,5 +1,6 @@
 
-require_relative "reservation"
+require_relative 'reservation'
+require_relative 'calendar'
 
 class HotelBooker
   attr_reader :rooms, :reservations
@@ -44,5 +45,22 @@ class HotelBooker
   end
 
   def find_reservation_by_date(date)
+    reservations_for_date = []
+    @reservations.each do |room, reservations|
+      reservations.each do |reservation|
+        days = (reservation.end_date - reservation.start_date + 1).to_i
+        current_date = reservation.end_date
+
+        days.times do
+          if date == current_date
+            reservations_for_date << reservation
+            break
+          end
+          current_date -= 1
+        end
+      end
+    end
+
+    return reservations_for_date
   end
 end
