@@ -1,0 +1,10 @@
+Refactor list 
+- improve find_reservation_by_date by creating another method that checks if the date is included in the range 
+-make the classes less coupled 
+-refactor all methods to be shorter/more efficient 
+-add a module 
+-reword test desciptions 
+-make method that calculates nights 
+-check all names and make sure they make sense 
+
+
