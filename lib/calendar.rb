@@ -11,6 +11,6 @@ class Calendar
   end
 
   def overlap?(current_reservation)
-    return !(current_reservation.start_date >= @end_date || current_reservation.end_date < @start_date)
+    return !(current_reservation.start_date >= @end_date || current_reservation.end_date <= @start_date)
   end
 end
