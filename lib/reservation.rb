@@ -5,11 +5,12 @@ class Reservation
         @id = id 
         @start_date = start_date
         @end_date = end_date 
-        @room = room       
+        @room = room    
+         
     end 
     
     def total_cost 
-        200 * (end_date - start_date).to_i 
+        200 * (@end_date - @start_date).to_i 
     end 
        
 end 
