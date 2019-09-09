@@ -25,7 +25,7 @@ describe "Wave 1 " do
 
     it "checks if new reservation is added to reservations" do
       hotel = HotelBooker.new
-      new_res = hotel.create_reservation(1, Date.new(2019, 2, 5), Date.new(2019, 2, 9))
+      hotel.create_reservation(1, Date.new(2019, 2, 5), Date.new(2019, 2, 9))
       expect(hotel.reservations[1].length).must_equal 1
     end
     it "doesnt make conflicting reservations for the same room" do
@@ -33,11 +33,10 @@ describe "Wave 1 " do
       hotel.create_reservation(1, Date.new(2019, 2, 6), Date.new(2019, 2, 11))
       hotel.create_reservation(4, Date.new(2019, 2, 7), Date.new(2019, 2, 10))
 
-      puts hotel.reservations
       expect(hotel.reservations[1].length).must_equal 1
       expect(hotel.reservations[2].length).must_equal 1
     end
-    it "checks that new reservations start on checkout days" do
+    it "checks that new reservations can start on checkout days" do
       hotel = HotelBooker.new
       hotel.create_reservation(1, Date.new(2019, 2, 6), Date.new(2019, 2, 11))
       hotel.create_reservation(2, Date.new(2019, 2, 1), Date.new(2019, 2, 6))
