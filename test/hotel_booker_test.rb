@@ -5,10 +5,10 @@ describe "Wave 1 " do
     before do
       @hotel = HotelBooker.new
     end
-    it "creates  20 rooms " do
+    it "creates 20 rooms " do
       expect(@hotel.rooms.length).must_equal 20
     end
-    it "checks that rooms are integers" do
+    it " returns rooms that are integers" do
       expect(@hotel.rooms).must_be_instance_of Array
       @hotel.rooms.each do |room|
         expect(room).must_be_instance_of Integer
@@ -23,7 +23,7 @@ describe "Wave 1 " do
       expect(reservation).must_be_instance_of Reservation
     end
 
-    it "checks if new reservation is added to reservations" do
+    it "new reservation is added to reservations" do
       hotel = HotelBooker.new
       hotel.create_reservation(1, Date.new(2019, 2, 5), Date.new(2019, 2, 9))
       expect(hotel.reservations[1].length).must_equal 1
@@ -36,11 +36,18 @@ describe "Wave 1 " do
       expect(hotel.reservations[1].length).must_equal 1
       expect(hotel.reservations[2].length).must_equal 1
     end
-    it "checks that new reservations can start on checkout days" do
+    it "new reservations can start on checkout days" do
       hotel = HotelBooker.new
       hotel.create_reservation(1, Date.new(2019, 2, 6), Date.new(2019, 2, 11))
       hotel.create_reservation(2, Date.new(2019, 2, 1), Date.new(2019, 2, 6))
       expect(hotel.reservations[1].length).must_equal 2
+    end
+    it "produces an error if all the rooms are booked" do
+      hotel = HotelBooker.new
+      20.times do |i|
+        hotel.create_reservation(i, Date.new(2019, 2, 6), Date.new(2019, 2, 11))
+      end
+      expect { hotel.create_reservation(21, Date.new(2019, 2, 6), Date.new(2019, 2, 11)) }.must_raise NoAvailableRoomsError
     end
   end
 
