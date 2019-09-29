@@ -2,6 +2,8 @@
 require_relative 'reservation'
 require_relative 'calendar'
 
+class NoAvailableRoomsError < StandardError 
+end 
 class HotelBooker
   attr_reader :rooms, :reservations
 
@@ -17,7 +19,7 @@ class HotelBooker
 
   def find_available_room(start_date, end_date)
     available_rooms = []
-    @reservations.each do |room, reservations|
+    reservations.each do |room, reservations|
       if reservations.empty?
         available_rooms << room
       else
@@ -35,32 +37,19 @@ class HotelBooker
     found_rooms = find_available_room(start_date, end_date)
 
     if found_rooms.empty?
-      raise ArgumentError " no available rooms "
+      raise NoAvailableRoomsError
     else
       new_reservation = Reservation.new(id: id, start_date: start_date, end_date: end_date, room: found_rooms.first)
-      @reservations[found_rooms.first] = @reservations[found_rooms.first] << new_reservation
+      reservations[found_rooms.first] = reservations[found_rooms.first] << new_reservation
 
       return new_reservation
     end
   end
 
   def find_reservation_by_date(date)
-    reservations_for_date = []
-    @reservations.each do |room, reservations|
-      reservations.each do |reservation|
-        days = (reservation.end_date - reservation.start_date + 1).to_i
-        current_date = reservation.end_date
-
-        days.times do
-          if date == current_date
-            reservations_for_date << reservation
-            break
-          end
-          current_date -= 1
-        end
-      end
-    end
-
-    return reservations_for_date
+    reservations_for_date = reservations.map do |room, reservation| 
+    reservation.find_all { |reservation| reservation.calculate_days.include?(date)}
+    end 
+    return reservations_for_date.flatten
   end
 end
